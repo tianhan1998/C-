@@ -16,13 +16,28 @@ namespace 记事本
         public Form1()
         {
             InitializeComponent();
+            richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
         }
+        private void IndexChanged(object sender,EventArgs e)
+        {
+            /*SelectionStart返回的是从第一个字符开始的光标位置索引
+             * GetLineFromCharIndex(index)方法会返回index索引的行号(从0开始)
+             * GetFirstCharIndexOfCurrentLine()方法会返回当前光标行的第一个字符的索引
+             */
+            int line = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart)+1;
+            int column = richTextBox1.SelectionStart-richTextBox1.GetFirstCharIndexOfCurrentLine()+1;
+            toolStripStatusLabel3.Text = "  第 " + line.ToString()+" 行，第 "+column.ToString()+" 列";
+        }
         private DialogResult AskChangeSave()
         {
-            DialogResult choice = MessageBox.Show("是否将改动保存至" + istype.name, "保存", MessageBoxButtons.YesNoCancel);
+            DialogResult choice;
+            if (istype.isopen)
+            choice = MessageBox.Show("是否将改动保存到 " + istype.openpath, "保存", MessageBoxButtons.YesNoCancel);
+            else
+            choice = MessageBox.Show("是否将改动保存到 " + istype.name, "保存", MessageBoxButtons.YesNoCancel);
             if (choice == DialogResult.Yes)
             {
                 if (Save())
@@ -66,6 +81,11 @@ namespace 记事本
         }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if(istype.ischange)
+            {
+                if(AskChangeSave()==DialogResult.Cancel)
+                    return;
+            }
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "文本文件|*.txt";
             if (open.ShowDialog()==DialogResult.OK)
@@ -93,14 +113,6 @@ namespace 记事本
         {
 
         }
-
-        private void 字体ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FontDialog font = new FontDialog();
-            if(font.ShowDialog()==DialogResult.OK)
-                richTextBox1.Font = font.Font;
-        }
-
         private void 新建ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(istype.ischange)
@@ -131,6 +143,53 @@ namespace 记事本
                 istype.ischange = false;
             }
         }
+
+        private void FontDialog1_Apply(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 页面设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PageSetupDialog pageSetupDialog = new PageSetupDialog();
+            pageSetupDialog.PageSettings = new System.Drawing.Printing.PageSettings();
+            pageSetupDialog.ShowDialog();
+        }
+
+        private void 打印ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrintDialog print= new PrintDialog();
+            print.ShowDialog();
+        }
+
+        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void 格式ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 字体ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            FontDialog font = new FontDialog();
+            if(font.ShowDialog()==DialogResult.OK)
+                richTextBox1.Font = font.Font;
+        }
+
+        private void 自动换行ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.WordWrap = 自动换行ToolStripMenuItem.Checked;
+        }
+
+        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+
     }
     public static class istype
     {
@@ -141,13 +200,13 @@ namespace 记事本
         public static void openFileChangeType(OpenFileDialog open)//打开文件改变类型
         {
             openpath = open.FileName;
-            name = Path.GetFileNameWithoutExtension(open.FileName);
+            name = Path.GetFileName(open.FileName);
             isopen = true;
         }
-        public static void openFileChangeType(SaveFileDialog save)
+        public static void openFileChangeType(SaveFileDialog save)//另存为后进入
         {
             openpath = save.FileName;
-            name = Path.GetFileNameWithoutExtension(save.FileName);
+            name = Path.GetFileName(save.FileName);
             isopen = true;
         }
         public static void isOpenInit()//打开文件初始化
