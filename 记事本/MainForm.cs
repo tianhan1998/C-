@@ -8,15 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
 
 namespace 记事本
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
+            if(Clipboard.GetText()=="")
+                PastePToolStripMenuItem.Enabled = false;
+            else
+                PastePToolStripMenuItem.Enabled = true;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -30,14 +35,30 @@ namespace 记事本
             int line = richTextBox1.GetLineFromCharIndex(richTextBox1.SelectionStart)+1;
             int column = richTextBox1.SelectionStart-richTextBox1.GetFirstCharIndexOfCurrentLine()+1;
             toolStripStatusLabel3.Text = "  第 " + line.ToString()+" 行，第 "+column.ToString()+" 列";
+            if(richTextBox1.SelectedText.Length>0)
+            {
+                CopyToolStripMenuItem.Enabled = true;
+                CutToolStripMenuItem.Enabled = true;
+                DelToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                CopyToolStripMenuItem.Enabled = false;
+                CutToolStripMenuItem.Enabled = false;
+                DelToolStripMenuItem.Enabled = false;
+            }
+            if(Clipboard.GetText()=="")
+                PastePToolStripMenuItem.Enabled = false;
+            else
+                PastePToolStripMenuItem.Enabled = true;
         }
         private DialogResult AskChangeSave()
         {
             DialogResult choice;
-            if (istype.isopen)
-            choice = MessageBox.Show("是否将改动保存到 " + istype.openpath, "保存", MessageBoxButtons.YesNoCancel);
+            if (openfile.isopen)
+            choice = MessageBox.Show("是否将改动保存到 " + openfile.openpath, "保存", MessageBoxButtons.YesNoCancel);
             else
-            choice = MessageBox.Show("是否将改动保存到 " + istype.name, "保存", MessageBoxButtons.YesNoCancel);
+            choice = MessageBox.Show("是否将改动保存到 " + openfile.name, "保存", MessageBoxButtons.YesNoCancel);
             if (choice == DialogResult.Yes)
             {
                 if (Save())
@@ -49,27 +70,27 @@ namespace 记事本
         }
         private bool Save()//true保存成功 false取消保存
         {
-            if (!istype.isopen)//未打开文件（无标题）
+            if (!openfile.isopen)//未打开文件（无标题）
             {
                 SaveFileDialog saveFile = new SaveFileDialog();
                 saveFile.Filter = "文本文件|*.txt";
                 if (saveFile.ShowDialog() == DialogResult.OK)//选择保存路径
                 {
                     richTextBox1.SaveFile(saveFile.FileName, RichTextBoxStreamType.PlainText);
-                    istype.ischange = false;
+                    richTextBox1.Modified = false;
                 }
                 else return false;//文件不选
             }
             else//打开了直接保存
             {
-                richTextBox1.SaveFile(istype.openpath, RichTextBoxStreamType.PlainText);
-                istype.ischange = false;
+                richTextBox1.SaveFile(openfile.openpath, RichTextBoxStreamType.PlainText);
+                richTextBox1.Modified = false;
             } 
             return true;//保存完成
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(istype.ischange)
+            if(richTextBox1.Modified)
             {
                 if (AskChangeSave() == DialogResult.Cancel)
                     e.Cancel = true;
@@ -81,7 +102,7 @@ namespace 记事本
         }
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(istype.ischange)
+            if(richTextBox1.Modified)
             {
                 if(AskChangeSave()==DialogResult.Cancel)
                     return;
@@ -98,15 +119,16 @@ namespace 记事本
                     richTextBox1.AppendText(str + "\n");
                     str = sr.ReadLine();
                 }
-                istype.openFileChangeType(open);
-                this.Text = istype.name+" - 记事本";
+                openfile.openFileChangeType(open);
+                this.Text = openfile.name+" - 记事本";
                 sr.Close();
-                istype.ischange = false;
+                richTextBox1.Modified = false;
             }
         }
         private void RichTextBox1_TextChanged(object sender, EventArgs e)
         {
-            istype.ischange = true;
+            if (richTextBox1.CanUndo)
+                撤销ZToolStripMenuItem.Enabled = true;
         }
 
         private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -115,15 +137,15 @@ namespace 记事本
         }
         private void 新建ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(istype.ischange)
+            if(richTextBox1.Modified)
             {
                 if(AskChangeSave()==DialogResult.Cancel)
                     return;
             }
-            istype.isOpenInit();
+            openfile.isOpenInit();
             richTextBox1.Clear();
             this.Text = "无标题 - 记事本";
-            istype.name = "无标题";
+            openfile.name = "无标题";
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -138,9 +160,9 @@ namespace 记事本
             if (saveFile.ShowDialog() == DialogResult.OK)//选择保存路径
             {
                 richTextBox1.SaveFile(saveFile.FileName, RichTextBoxStreamType.PlainText);
-                istype.openFileChangeType(saveFile);
-                this.Text = istype.name+" - 记事本";
-                istype.ischange = false;
+                openfile.openFileChangeType(saveFile);
+                this.Text = openfile.name+" - 记事本";
+                richTextBox1.Modified = false;
             }
         }
 
@@ -189,14 +211,45 @@ namespace 记事本
 
         }
 
+        private void 撤销ZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Undo();
+        }
+        private void 前进ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Redo();
+        }
+        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Cut();
+        }
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Copy();
+        }
+        private void PastePToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Paste();
+        }
 
+        private void 使用ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://cn.bing.com/?scope=web&FORM=NPCTXT");
+        }
+
+        private void 查找FToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FindForm findForm = new FindForm();
+            findForm.Owner = this;
+            findForm.Show();
+            
+        }
     }
-    public static class istype
+    public static class openfile
     {
         public static string openpath;//当前打开文件路径
         public static string name="无标题";//当前打开文件名
         public static bool isopen = false;//是否打开了文本
-        public static bool ischange = false;//文本改变
         public static void openFileChangeType(OpenFileDialog open)//打开文件改变类型
         {
             openpath = open.FileName;
