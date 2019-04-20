@@ -18,7 +18,7 @@ namespace 记事本
         {
             InitializeComponent();
             richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
-            if(Clipboard.GetText()=="")
+            if(Clipboard.GetText()=="")//判断剪贴板是否为空（粘贴选项En/disable）
                 PastePToolStripMenuItem.Enabled = false;
             else
                 PastePToolStripMenuItem.Enabled = true;
@@ -28,7 +28,7 @@ namespace 记事本
         }
         private void IndexChanged(object sender,EventArgs e)
         {
-            /*SelectionStart返回的是从第一个字符开始的光标位置索引
+            /*SelectionStart返回的是从选中第一个字符开始的光标位置索引
              * GetLineFromCharIndex(index)方法会返回index索引的行号(从0开始)
              * GetFirstCharIndexOfCurrentLine()方法会返回当前光标行的第一个字符的索引
              */
@@ -236,11 +236,11 @@ namespace 记事本
         {
             Process.Start("https://cn.bing.com/?scope=web&FORM=NPCTXT");
         }
-
+        //子窗口传值
         private void 查找FToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FindForm findForm = new FindForm();
-            findForm.Owner = this;
+            findForm.Owner = this;//我是他爸爸
             findForm.Show();
             
         }

@@ -19,7 +19,7 @@ namespace 记事本
         }
         private void FindForm_Load(object sender, EventArgs e)
         {
-            MainForm main = (MainForm)this.Owner;
+            MainForm main = (MainForm)this.Owner;//告诉他谁是爹
             RichText = main.richTextBox1;
         }
 
@@ -40,15 +40,55 @@ namespace 记事本
         private void Startfind_Click(object sender, EventArgs e)
         {
             int findindex;
-            int searchindex = RichText.SelectionStart;
-            if (RichText.SelectedText != "")
-                searchindex += RichText.SelectedText.Length;
-            findindex = RichText.Find(textBox1.Text, searchindex, RichTextBoxFinds.None);
-            if (findindex < 0) 
+            int searchindex = RichText.SelectionStart;//一定要创建这个局部变量来存开始搜索的索引
+            if (radioButton2.Checked)//向下查找
             {
-                MessageBox.Show("找不到" + "\"" + textBox1.Text + "\"","记事本", MessageBoxButtons.OK);
+                if (RichText.SelectedText != "")//选中状态（自己选或者搜索到高亮）
+                    searchindex += RichText.SelectedText.Length;//跳过选中区域
+                if (checkBox1.Checked)//大小写匹配
+                    findindex = RichText.Find(textBox1.Text, searchindex, RichTextBoxFinds.MatchCase);
+                else
+                    findindex = RichText.Find(textBox1.Text, searchindex, RichTextBoxFinds.None);//默认查找
+                if (findindex < 0)
+                {
+                    if (checkBox2.Checked && RichText.SelectionStart != 0)//判断循环选项
+                    {
+                        RichText.SelectionStart = 0;//从头
+                        RichText.SelectionLength = 0;
+                        Startfind_Click(this, new EventArgs());
+                    }
+                    else
+                        MessageBox.Show("找不到" + "\"" + textBox1.Text + "\"", "记事本", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else//向上查找
+            {
+                if (RichText.SelectedText != "")//选中状态（自己选或者搜索到高亮）
+                    searchindex -= RichText.SelectedText.Length;//跳过选中区域
+                findindex = RichText.Find(textBox1.Text, 0, searchindex, RichTextBoxFinds.Reverse);//倒着找
+                if (findindex < 0)
+                {
+                    if (checkBox2.Checked && RichText.SelectionStart != RichText.Text.Length)//判断循环
+                    {
+                        RichText.SelectionStart = RichText.Text.Length;
+                        RichText.SelectionLength = 0;
+                        Startfind_Click(this, new EventArgs());
+
+                    }
+                    else
+                        MessageBox.Show("找不到" + "\"" + textBox1.Text + "\"", "记事本", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             
+        }
+
+        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radioButton2.Checked)//倒着找不能大小写匹配
+            {
+                checkBox1.Enabled = true;
+            }
+            else checkBox1.Enabled=false;
         }
     }
 }
