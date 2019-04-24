@@ -14,8 +14,8 @@ namespace 记事本
 {
     public partial class MainForm : Form
     {
-        FindForm findForm = new FindForm();
-        ReplaceForm replaceForm = new ReplaceForm();
+        public FindForm findForm = new FindForm();
+        public ReplaceForm replaceForm = new ReplaceForm();
         
         public MainForm()
         {
@@ -98,7 +98,10 @@ namespace 记事本
             if(richTextBox1.Modified)
             {
                 if (AskChangeSave() == DialogResult.Cancel)
+                {
                     e.Cancel = true;
+                    return;
+                }
             }
             findForm.Dispose();
             replaceForm.Dispose();
@@ -261,6 +264,22 @@ namespace 记事本
         private void 替换RToolStripMenuItem_Click(object sender, EventArgs e)
         {
             replaceForm.Show();
+        }
+
+        private void ZTLMenu_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ZTLMenu.Checked)
+                statusStrip1.Show();
+            else
+                statusStrip1.Hide();
+        }
+
+        private void 查看帮助HToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process p = new Process();
+            p.StartInfo.UseShellExecute = true;
+            p.StartInfo.FileName = @"C:\Users\hp\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Maintenance\help.lnk"; 
+            p.Start();
         }
     }
     public static class openfile

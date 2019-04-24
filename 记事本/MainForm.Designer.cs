@@ -51,11 +51,14 @@
             this.使用ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查找FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查找下一个ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.替换RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.格式ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.自动换行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ZTLMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
@@ -68,7 +71,6 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.替换RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -288,6 +290,14 @@
             this.查找下一个ToolStripMenuItem.Text = "查找下一个(&N)";
             this.查找下一个ToolStripMenuItem.Click += new System.EventHandler(this.查找下一个ToolStripMenuItem_Click);
             // 
+            // 替换RToolStripMenuItem
+            // 
+            this.替换RToolStripMenuItem.Name = "替换RToolStripMenuItem";
+            this.替换RToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.替换RToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.替换RToolStripMenuItem.Text = "替换(&R)";
+            this.替换RToolStripMenuItem.Click += new System.EventHandler(this.替换RToolStripMenuItem_Click);
+            // 
             // 格式ToolStripMenuItem
             // 
             this.格式ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -316,31 +326,50 @@
             // 
             // 查看VToolStripMenuItem
             // 
+            this.查看VToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ZTLMenu});
             this.查看VToolStripMenuItem.Name = "查看VToolStripMenuItem";
             this.查看VToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.查看VToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.查看VToolStripMenuItem.Text = "查看(&V)";
             // 
+            // ZTLMenu
+            // 
+            this.ZTLMenu.Checked = true;
+            this.ZTLMenu.CheckOnClick = true;
+            this.ZTLMenu.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ZTLMenu.Name = "ZTLMenu";
+            this.ZTLMenu.Size = new System.Drawing.Size(127, 22);
+            this.ZTLMenu.Text = "状态栏(&S)";
+            this.ZTLMenu.CheckedChanged += new System.EventHandler(this.ZTLMenu_CheckedChanged);
+            // 
             // 帮助HToolStripMenuItem
             // 
+            this.帮助HToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.查看帮助HToolStripMenuItem});
             this.帮助HToolStripMenuItem.Name = "帮助HToolStripMenuItem";
             this.帮助HToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.帮助HToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.帮助HToolStripMenuItem.Text = "帮助(&H)";
             // 
+            // 查看帮助HToolStripMenuItem
+            // 
+            this.查看帮助HToolStripMenuItem.Name = "查看帮助HToolStripMenuItem";
+            this.查看帮助HToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.查看帮助HToolStripMenuItem.Text = "查看帮助(&H)";
+            this.查看帮助HToolStripMenuItem.Click += new System.EventHandler(this.查看帮助HToolStripMenuItem_Click);
+            // 
             // richTextBox1
             // 
             this.richTextBox1.AcceptsTab = true;
-            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.DetectUrls = false;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.richTextBox1.HideSelection = false;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 23);
+            this.richTextBox1.Location = new System.Drawing.Point(0, 20);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1008, 685);
+            this.richTextBox1.Size = new System.Drawing.Size(1008, 709);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             this.richTextBox1.WordWrap = false;
@@ -415,14 +444,6 @@
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(152, 18);
             this.toolStripStatusLabel4.Text = "100%                            ";
             // 
-            // 替换RToolStripMenuItem
-            // 
-            this.替换RToolStripMenuItem.Name = "替换RToolStripMenuItem";
-            this.替换RToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.替换RToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.替换RToolStripMenuItem.Text = "替换(&R)";
-            this.替换RToolStripMenuItem.Click += new System.EventHandler(this.替换RToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -491,6 +512,8 @@
         public System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.ToolStripMenuItem 查找下一个ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 替换RToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ZTLMenu;
+        private System.Windows.Forms.ToolStripMenuItem 查看帮助HToolStripMenuItem;
     }
 }
 
