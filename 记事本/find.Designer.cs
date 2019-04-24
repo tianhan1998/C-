@@ -162,6 +162,7 @@
             this.ShowInTaskbar = false;
             this.Text = "查找";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FindForm_FormClosing);
             this.Load += new System.EventHandler(this.FindForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -173,13 +174,13 @@
         #endregion
 
         private System.Windows.Forms.Label tip;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button startfind;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton1;
+        public System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.Button startfind;
     }
 }

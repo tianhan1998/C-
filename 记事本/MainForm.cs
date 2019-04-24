@@ -14,9 +14,14 @@ namespace 记事本
 {
     public partial class MainForm : Form
     {
+        FindForm findForm = new FindForm();
+        ReplaceForm replaceForm = new ReplaceForm();
+        
         public MainForm()
         {
             InitializeComponent();
+            findForm.Owner = this;//我是他爸爸
+            replaceForm.Owner = this;
             richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
             if(Clipboard.GetText()=="")//判断剪贴板是否为空（粘贴选项En/disable）
                 PastePToolStripMenuItem.Enabled = false;
@@ -95,6 +100,9 @@ namespace 记事本
                 if (AskChangeSave() == DialogResult.Cancel)
                     e.Cancel = true;
             }
+            findForm.Dispose();
+            replaceForm.Dispose();
+            e.Cancel = false;
         }
         private void 文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -239,10 +247,20 @@ namespace 记事本
         //子窗口传值
         private void 查找FToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FindForm findForm = new FindForm();
-            findForm.Owner = this;//我是他爸爸
             findForm.Show();
-            
+        }
+
+        private void 查找下一个ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (findForm.textBox1.TextLength == 0)
+                findForm.Show();
+            else
+                findForm.Startfind_Click(findForm, new EventArgs());
+        }
+
+        private void 替换RToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            replaceForm.Show();
         }
     }
     public static class openfile

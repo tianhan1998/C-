@@ -22,10 +22,17 @@ namespace 记事本
             MainForm main = (MainForm)this.Owner;//告诉他谁是爹
             RichText = main.richTextBox1;
         }
-
+        public void Show()
+        {
+            base.Show();
+            if (RichText.SelectionLength != 0)
+                textBox1.Text = RichText.SelectedText;
+            textBox1.Focus();
+            textBox1.SelectAll();
+        }
         private void Cancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)
@@ -34,10 +41,9 @@ namespace 记事本
                 startfind.Enabled = false;
             else
                 startfind.Enabled = true;
-            
         }
 
-        private void Startfind_Click(object sender, EventArgs e)
+        public void Startfind_Click(object sender, EventArgs e)
         {
             int findindex;
             int searchindex = RichText.SelectionStart;//一定要创建这个局部变量来存开始搜索的索引
@@ -84,11 +90,13 @@ namespace 记事本
 
         private void RadioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            if(radioButton2.Checked)//倒着找不能大小写匹配
-            {
-                checkBox1.Enabled = true;
-            }
-            else checkBox1.Enabled=false;
+            checkBox1.Enabled = radioButton2.Checked;
+        }
+
+        private void FindForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
         }
     }
 }

@@ -50,6 +50,7 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.使用ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查找FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查找下一个ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.格式ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.自动换行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +68,7 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.替换RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -193,7 +195,9 @@
             this.DelToolStripMenuItem,
             this.toolStripSeparator7,
             this.使用ToolStripMenuItem,
-            this.查找FToolStripMenuItem});
+            this.查找FToolStripMenuItem,
+            this.查找下一个ToolStripMenuItem,
+            this.替换RToolStripMenuItem});
             this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
             this.编辑ToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
@@ -275,6 +279,14 @@
             this.查找FToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.查找FToolStripMenuItem.Text = "查找(&F)";
             this.查找FToolStripMenuItem.Click += new System.EventHandler(this.查找FToolStripMenuItem_Click);
+            // 
+            // 查找下一个ToolStripMenuItem
+            // 
+            this.查找下一个ToolStripMenuItem.Name = "查找下一个ToolStripMenuItem";
+            this.查找下一个ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.查找下一个ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.查找下一个ToolStripMenuItem.Text = "查找下一个(&N)";
+            this.查找下一个ToolStripMenuItem.Click += new System.EventHandler(this.查找下一个ToolStripMenuItem_Click);
             // 
             // 格式ToolStripMenuItem
             // 
@@ -403,6 +415,14 @@
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(152, 18);
             this.toolStripStatusLabel4.Text = "100%                            ";
             // 
+            // 替换RToolStripMenuItem
+            // 
+            this.替换RToolStripMenuItem.Name = "替换RToolStripMenuItem";
+            this.替换RToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
+            this.替换RToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.替换RToolStripMenuItem.Text = "替换(&R)";
+            this.替换RToolStripMenuItem.Click += new System.EventHandler(this.替换RToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -469,6 +489,8 @@
         private System.Windows.Forms.ToolStripMenuItem 使用ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 查找FToolStripMenuItem;
         public System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem 查找下一个ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 替换RToolStripMenuItem;
     }
 }
 
