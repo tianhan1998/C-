@@ -16,7 +16,7 @@ namespace 记事本
     {
         public FindForm findForm = new FindForm();
         public ReplaceForm replaceForm = new ReplaceForm();
-        
+        public static int Zoom = 10;
         public MainForm()
         {
             InitializeComponent();
@@ -276,10 +276,34 @@ namespace 记事本
 
         private void 查看帮助HToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process p = new Process();
-            p.StartInfo.UseShellExecute = true;
-            p.StartInfo.FileName = @"C:\Users\hp\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Maintenance\help.lnk"; 
-            p.Start();
+            Process.Start("https://go.microsoft.com/fwlink/?LinkId=834783");
+        }
+
+        private void 放大ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Zoom<50)
+            {
+                Zoom++;
+                richTextBox1.ZoomFactor = 0.1F * Zoom;
+                toolStripStatusLabel4.Text = Zoom * 10 + "%";
+            }
+        }
+
+        private void 缩小ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(Zoom>1)
+            {
+                Zoom--;
+                richTextBox1.ZoomFactor = 0.1F * Zoom;
+                toolStripStatusLabel4.Text = Zoom * 10 + "%";
+            }
+        }
+
+        private void 恢复默认缩放ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Zoom = 10;
+            richTextBox1.ZoomFactor = 1;
+            toolStripStatusLabel4.Text = 100 + "%";
         }
     }
     public static class openfile

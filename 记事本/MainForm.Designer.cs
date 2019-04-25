@@ -56,6 +56,10 @@
             this.自动换行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看VToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.缩放ZToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.放大ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.缩小ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.恢复默认缩放ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ZTLMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看帮助HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +75,8 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.关于记事本AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -327,11 +333,46 @@
             // 查看VToolStripMenuItem
             // 
             this.查看VToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.缩放ZToolStripMenuItem,
             this.ZTLMenu});
             this.查看VToolStripMenuItem.Name = "查看VToolStripMenuItem";
             this.查看VToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.查看VToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.查看VToolStripMenuItem.Text = "查看(&V)";
+            // 
+            // 缩放ZToolStripMenuItem
+            // 
+            this.缩放ZToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.放大ToolStripMenuItem,
+            this.缩小ToolStripMenuItem,
+            this.恢复默认缩放ToolStripMenuItem});
+            this.缩放ZToolStripMenuItem.Name = "缩放ZToolStripMenuItem";
+            this.缩放ZToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.缩放ZToolStripMenuItem.Text = "缩放(&Z)";
+            // 
+            // 放大ToolStripMenuItem
+            // 
+            this.放大ToolStripMenuItem.Name = "放大ToolStripMenuItem";
+            this.放大ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemplus)));
+            this.放大ToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.放大ToolStripMenuItem.Text = "放大";
+            this.放大ToolStripMenuItem.Click += new System.EventHandler(this.放大ToolStripMenuItem_Click);
+            // 
+            // 缩小ToolStripMenuItem
+            // 
+            this.缩小ToolStripMenuItem.Name = "缩小ToolStripMenuItem";
+            this.缩小ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.OemMinus)));
+            this.缩小ToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.缩小ToolStripMenuItem.Text = "缩小";
+            this.缩小ToolStripMenuItem.Click += new System.EventHandler(this.缩小ToolStripMenuItem_Click);
+            // 
+            // 恢复默认缩放ToolStripMenuItem
+            // 
+            this.恢复默认缩放ToolStripMenuItem.Name = "恢复默认缩放ToolStripMenuItem";
+            this.恢复默认缩放ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.恢复默认缩放ToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.恢复默认缩放ToolStripMenuItem.Text = "恢复默认缩放";
+            this.恢复默认缩放ToolStripMenuItem.Click += new System.EventHandler(this.恢复默认缩放ToolStripMenuItem_Click);
             // 
             // ZTLMenu
             // 
@@ -339,14 +380,16 @@
             this.ZTLMenu.CheckOnClick = true;
             this.ZTLMenu.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ZTLMenu.Name = "ZTLMenu";
-            this.ZTLMenu.Size = new System.Drawing.Size(127, 22);
+            this.ZTLMenu.Size = new System.Drawing.Size(180, 22);
             this.ZTLMenu.Text = "状态栏(&S)";
             this.ZTLMenu.CheckedChanged += new System.EventHandler(this.ZTLMenu_CheckedChanged);
             // 
             // 帮助HToolStripMenuItem
             // 
             this.帮助HToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.查看帮助HToolStripMenuItem});
+            this.查看帮助HToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.关于记事本AToolStripMenuItem});
             this.帮助HToolStripMenuItem.Name = "帮助HToolStripMenuItem";
             this.帮助HToolStripMenuItem.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.帮助HToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
@@ -440,9 +483,22 @@
             // 
             // toolStripStatusLabel4
             // 
+            this.toolStripStatusLabel4.AutoSize = false;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(152, 18);
             this.toolStripStatusLabel4.Text = "100%                            ";
+            this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            // 
+            // 关于记事本AToolStripMenuItem
+            // 
+            this.关于记事本AToolStripMenuItem.Name = "关于记事本AToolStripMenuItem";
+            this.关于记事本AToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.关于记事本AToolStripMenuItem.Text = "关于记事本(&A)";
             // 
             // MainForm
             // 
@@ -514,6 +570,12 @@
         private System.Windows.Forms.ToolStripMenuItem 替换RToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ZTLMenu;
         private System.Windows.Forms.ToolStripMenuItem 查看帮助HToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 缩放ZToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 放大ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 缩小ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 恢复默认缩放ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem 关于记事本AToolStripMenuItem;
     }
 }
 
