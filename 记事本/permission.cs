@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace 记事本
 {
-    public partial class AboutForm : Form
+    public partial class PermissionForm : Form
     {
-        public AboutForm()
+        public PermissionForm()
         {
             InitializeComponent();
         }
@@ -20,12 +20,6 @@ namespace 记事本
         private void Button1_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            PermissionForm permissionForm = new PermissionForm();
-            permissionForm.ShowDialog();
         }
     }
 }

@@ -215,6 +215,10 @@ namespace 记事本
         private void 自动换行ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             richTextBox1.WordWrap = 自动换行ToolStripMenuItem.Checked;
+            if (!richTextBox1.WordWrap)
+                richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
+            else
+                richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
         }
 
         private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -304,6 +308,23 @@ namespace 记事本
             Zoom = 10;
             richTextBox1.ZoomFactor = 1;
             toolStripStatusLabel4.Text = 100 + "%";
+        }
+
+        private void 关于记事本AToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm aboutForm = new AboutForm();
+            aboutForm.ShowDialog();
+        }
+
+        private void 全选AToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBox1.SelectAll();
+        }
+
+        private void 时间日期ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            richTextBox1.SelectedText = now.ToShortTimeString().ToString() + " " + now.ToShortDateString().ToString();
         }
     }
     public static class openfile

@@ -66,7 +66,7 @@ namespace 记事本
                 button2.Enabled = false;
             }
         }
-        private bool Startfind(bool again=false,bool allreplace=false)//第一个参数是循环回溯特例查询，第二个参数是
+        private bool Startfind(bool again=false,bool allreplace=false)//第一个参数是循环回溯特例查询，第二个参数是全部替换
         {
             int findindex, searchindex;
             if (!again)

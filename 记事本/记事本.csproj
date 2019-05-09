@@ -64,6 +64,12 @@
     <Compile Include="find.Designer.cs">
       <DependentUpon>find.cs</DependentUpon>
     </Compile>
+    <Compile Include="permission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="permission.Designer.cs">
+      <DependentUpon>permission.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="replace.cs">
@@ -81,6 +87,9 @@
     <EmbeddedResource Include="find.resx">
       <DependentUpon>find.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="permission.resx">
+      <DependentUpon>permission.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -89,6 +98,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="replace.resx">
       <DependentUpon>replace.cs</DependentUpon>
@@ -105,6 +115,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\timg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\QQ截图20190509125956.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\QQ截图20190509130150.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\109951163720833596.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\c1869ecbd1c8a78657595e026a09c93d71cf50e1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
