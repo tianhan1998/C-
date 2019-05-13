@@ -22,8 +22,9 @@ namespace 记事本
             InitializeComponent();
             findForm.Owner = this;//我是他爸爸
             replaceForm.Owner = this;
+            转到GToolStripMenuItem.Enabled = false;
             richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
-            if(Clipboard.GetText()=="")//判断剪贴板是否为空（粘贴选项En/disable）
+            if (Clipboard.GetText()=="")//判断剪贴板是否为空（粘贴选项En/disable）
                 PastePToolStripMenuItem.Enabled = false;
             else
                 PastePToolStripMenuItem.Enabled = true;
@@ -219,6 +220,7 @@ namespace 记事本
                 richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedBoth;
             else
                 richTextBox1.ScrollBars = RichTextBoxScrollBars.ForcedVertical;
+            转到GToolStripMenuItem.Enabled = !richTextBox1.WordWrap;
         }
 
         private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -325,6 +327,115 @@ namespace 记事本
         {
             DateTime now = DateTime.Now;
             richTextBox1.SelectedText = now.ToShortTimeString().ToString() + " " + now.ToShortDateString().ToString();
+        }
+
+        private void 转到GToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GotoLineForm gotoLine = new GotoLineForm();
+            gotoLine.Owner = this;
+            gotoLine.ShowDialog();
+        }
+
+        private void Rtbmenu_Opened(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            撤销ToolStripMenuItem.Enabled = rtb.CanUndo;
+            if(rtb.SelectionLength!=0)
+            {
+                汉字重选ToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                汉字重选ToolStripMenuItem.Enabled = false;
+            }
+            if(rtb.ImeMode==ImeMode.Close)
+            {
+                打开输入法ToolStripMenuItem.Visible = true;
+                关闭输入法toolStripMenuItem1.Visible = false;
+            }
+            else if(rtb.ImeMode==ImeMode.On)
+            {
+                打开输入法ToolStripMenuItem.Visible = false;
+                关闭输入法toolStripMenuItem1.Visible = true;
+            }
+            if (rtb.SelectionLength != 0) 
+            {
+                剪切ToolStripMenuItem.Enabled = true;
+                复制ToolStripMenuItem.Enabled = true;
+                删除DToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                剪切ToolStripMenuItem.Enabled = false;
+                复制ToolStripMenuItem.Enabled = false;
+                删除DToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void 撤销ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.Undo();
+        }
+
+        private void 剪切ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.Cut();
+        }
+
+        private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.Copy();
+        }
+
+        private void 粘贴PToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.Paste();
+        }
+
+        private void 删除DToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.SelectedText = "";
+        }
+
+        private void 全选AToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.SelectAll();
+        }
+
+        private void 从右到左的阅读顺序RToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            switch(从右到左的阅读顺序RToolStripMenuItem.Checked)
+            {
+                case true:rtb.RightToLeft = RightToLeft.Yes;break;
+                case false:rtb.RightToLeft = RightToLeft.No;break;
+            }
+        }
+
+        private void 打开输入法ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.ImeMode = ImeMode.OnHalf;
+        }
+
+        private void 关闭输入法toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            rtb.ImeMode = ImeMode.Close;
+        }
+
+        private void 汉字重选ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)rtbmenu.SourceControl;
+            int temp = rtb.SelectionLength;
+            rtb.SelectionLength = 0;
+            rtb.SelectionStart += temp;
         }
     }
     public static class openfile
